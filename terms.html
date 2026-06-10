@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — InsightFlow AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8a8a9a;
+            --text-muted: #5a5a6a;
+            --accent-1: #6c5ce7;
+            --accent-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #00cec9 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(108, 92, 231, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 92, 231, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 4rem auto;
+            position: relative;
+            z-index: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        ul {
+            list-style-position: inside;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <br>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">⚡</div>
+            InsightFlow AI
+        </a>
+        <h1>Terms of Service</h1>
+        <p>Last Updated: June 10, 2026</p>
+        <p>Welcome to InsightFlow AI. By accessing or using our automated data analytics platform, you agree to comply with and be bound by the following Terms of Service.</p>
+
+        <h2>1. Description of Service</h2>
+        <p>InsightFlow AI provides web-based tools for automated data ingestion, visualization, analysis, and generation of natural language summaries using artificial intelligence models. Our services are subject to continuous evolution and modification.</p>
+
+        <h2>2. User Obligations & Data Ownership</h2>
+        <p>You retain full ownership and intellectual property rights to any datasets and files you upload to our platform. You are responsible for ensuring that you have all necessary rights and permissions to process these datasets.</p>
+
+        <h2>3. Acceptable Use Policy</h2>
+        <p>You agree not to use the platform to process malware, illegal content, or perform activities designed to disrupt the stability of our cloud infrastructure. Google Cloud and AWS services utilized by InsightFlow AI must be accessed in accordance with their respective Acceptable Use policies.</p>
+
+        <h2>4. Disclaimer of Warranties</h2>
+        <p>InsightFlow AI services are provided "as is" and "as available". We do not guarantee uninterrupted availability or that the AI-generated summaries will be free of errors, hallucinations, or technical inaccuracies. Users must verify analytical results independently.</p>
+
+        <h2>5. Contact & Inquiries</h2>
+        <p>If you have any questions or require support regarding these terms, please contact us at <a href="mailto:hello@insightflowai.online" style="color: var(--accent-1); text-decoration: none;">hello@insightflowai.online</a>.</p>
+    </div>
+</body>
+</html>

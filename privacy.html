@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — InsightFlow AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8a8a9a;
+            --text-muted: #5a5a6a;
+            --accent-1: #6c5ce7;
+            --accent-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #00cec9 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(108, 92, 231, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 92, 231, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 4rem auto;
+            position: relative;
+            z-index: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        ul {
+            list-style-position: inside;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <br>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">⚡</div>
+            InsightFlow AI
+        </a>
+        <h1>Privacy Policy</h1>
+        <p>Last Updated: June 10, 2026</p>
+        <p>At InsightFlow AI, we prioritize the privacy and security of our users' data. This Privacy Policy explains how we collect, use, process, and safeguard information when you use our automated data analytics platform.</p>
+
+        <h2>1. Information We Collect</h2>
+        <p>We only collect information necessary to provide and improve our services, including:</p>
+        <ul>
+            <li><strong>Account Details:</strong> Basic contact info (name, email, organization details) when you register for early access or set up an account.</li>
+            <li><strong>Dataset Metadata:</strong> Information about file structures, columns, and types to optimize AI execution (your raw file data is processed securely and is never stored permanently).</li>
+            <li><strong>Usage Log Data:</strong> Standard access metrics, performance indicators, and execution timings.</li>
+        </ul>
+
+        <h2>2. Data Processing & Security</h2>
+        <p>Your uploaded files (CSV, Excel, JSON) are processed locally or via secure cloud APIs. We do not sell or share your data. All datasets are fully encrypted in transit and at rest. If using Vertex AI or Gemini APIs, your data is processed according to enterprise security standards and is not used for model training purposes.</p>
+
+        <h2>3. Third-Party Services</h2>
+        <p>We leverage secure cloud infrastructure including Google Cloud Platform (Vertex AI, BigQuery) and AWS to ensure reliable platform performance and secure analytical computation.</p>
+
+        <h2>4. Contact Us</h2>
+        <p>If you have any questions regarding this privacy policy or our data security protocols, please reach out to us at <a href="mailto:hello@insightflowai.online" style="color: var(--accent-1); text-decoration: none;">hello@insightflowai.online</a>.</p>
+    </div>
+</body>
+</html>
