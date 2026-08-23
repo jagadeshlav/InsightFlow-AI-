@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InsightFlow AI — Document Q&A</title>
+    <meta name="description" content="Upload any document and ask AI-powered questions. Get instant answers with source citations.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚡</div>
+                InsightFlow AI
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html" class="active">App</a></li>
+                <li><a href="https://github.com/jagadeshlav/InsightFlow-AI-" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- App Container -->
+    <main class="app-container">
+
+        <!-- ═══════ CONFIG PANEL ═══════ -->
+        <section class="config-panel" id="configPanel">
+            <h2>Document Q&A</h2>
+            <p class="subtitle">Upload a document or try a sample — then ask questions and get AI-powered answers.</p>
+
+            <!-- Sample Documents -->
+            <div class="samples-section">
+                <h3>⚡ Try a Sample (Instant, No Upload)</h3>
+                <div class="sample-cards" id="sampleCards">
+                    <!-- Dynamic: populated by JS -->
+                    <div class="sample-card glass-card" data-sample="one_piece">
+                        <div class="icon">🏴‍☠️</div>
+                        <div class="title">One Piece: Epic Saga (Tenglish)</div>
+                        <div class="desc">Complete One Piece story in Telugu+English. Test multi-language RAG!</div>
+                        <div class="badge">Pre-indexed • Instant</div>
+                    </div>
+                    <div class="sample-card glass-card coming-soon" style="opacity: 0.5; cursor: default;">
+                        <div class="icon">📋</div>
+                        <div class="title">More Samples Coming Soon</div>
+                        <div class="desc">Insurance policies, tech docs, and more...</div>
+                        <div class="badge">Coming Soon</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider">or upload your own document</div>
+
+            <!-- Upload Zone -->
+            <div class="upload-zone glass-card" id="uploadZone">
+                <div class="icon">📄</div>
+                <div class="text">
+                    <strong>Drop your file here</strong> or click to browse
+                </div>
+                <div class="formats">Supports PDF, TXT, DOCX — Max 10MB</div>
+                <input type="file" id="fileInput" accept=".pdf,.txt,.docx">
+            </div>
+
+            <!-- Provider Selection -->
+            <div class="config-section">
+                <label>🔌 Provider</label>
+                <div class="provider-options" id="providerOptions">
+                    <div class="provider-option active" data-provider="tokenrouter">
+                        <span>🔗</span> TokenRouter
+                    </div>
+                    <div class="provider-option" data-provider="direct">
+                        <span>⚡</span> Direct
+                    </div>
+                    <div class="provider-option" data-provider="openrouter">
+                        <span>🌐</span> OpenRouter
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Selection -->
+            <div class="config-section">
+                <label>🤖 Model</label>
+                <select class="model-select" id="modelSelect">
+                    <option value="qwen/qwen3.8-max-free">Qwen 3.8 Max (Free)</option>
+                    <option value="moonshotai/kimi-k3">Moonshot Kimi K3</option>
+                </select>
+            </div>
+
+            <!-- API Key -->
+            <div class="config-section">
+                <label>🔑 API Key (optional)</label>
+                <input type="password" class="api-key-input" id="apiKeyInput" placeholder="Leave empty for free default model">
+                <div class="config-hint" id="keyHint">💡 Free default model — no API key needed!</div>
+            </div>
+
+            <!-- Start Chat Button -->
+            <button class="btn btn-primary start-chat-btn" id="startChatBtn" disabled>
+                🚀 Start Chat
+            </button>
+
+            <!-- Status Message -->
+            <div class="status-message" id="statusMessage"></div>
+        </section>
+
+        <!-- ═══════ CHAT PANEL (hidden initially, shown by JS) ═══════ -->
+        <section class="chat-panel" id="chatPanel" style="display: none;">
+            <!-- Will be built in Task 8 -->
+        </section>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/app.js"></script>
+</body>
+</html>

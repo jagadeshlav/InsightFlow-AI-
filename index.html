@@ -3,663 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InsightFlow AI — Instant Data Insights, Powered by AI</title>
-    <meta name="description" content="Upload any CSV or Excel file and get instant AI-powered insights, visualizations, and plain-English summaries. InsightFlow AI makes data analysis simple for everyone.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>InsightFlow AI — Document Q&A Powered by RAG</title>
+    <meta name="description" content="Upload any PDF, TXT, or DOCX file and ask questions — get AI-powered answers with source citations using Retrieval Augmented Generation.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-    <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --text-primary: #f0f0f5;
-            --text-secondary: #8a8a9a;
-            --text-muted: #5a5a6a;
-            --accent-1: #6c5ce7;
-            --accent-2: #a29bfe;
-            --accent-3: #00cec9;
-            --accent-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #00cec9 100%);
-            --glow-purple: rgba(108, 92, 231, 0.15);
-            --glow-cyan: rgba(0, 206, 201, 0.15);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* ====== ANIMATED BACKGROUND ====== */
-        .bg-grid {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background-image: 
-                linear-gradient(rgba(108, 92, 231, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(108, 92, 231, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-        }
-
-        .bg-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.4;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bg-glow-1 {
-            top: -200px;
-            right: -100px;
-            background: var(--glow-purple);
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .bg-glow-2 {
-            bottom: -200px;
-            left: -100px;
-            background: var(--glow-cyan);
-            animation: float 10s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -30px) scale(1.1); }
-        }
-
-        /* ====== NAVBAR ====== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 1rem 2rem;
-            backdrop-filter: blur(20px);
-            background: rgba(10, 10, 15, 0.8);
-            border-bottom: 1px solid var(--border-subtle);
-            transition: all 0.3s ease;
-        }
-
-        .navbar-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-        }
-
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: var(--accent-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.65rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: var(--accent-gradient);
-            color: white;
-            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-subtle);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        /* ====== HERO ====== */
-        .hero {
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 1rem 0.4rem 0.5rem;
-            border-radius: 50px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .hero-badge-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent-3);
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 206, 201, 0.4); }
-            50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(0, 206, 201, 0); }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease 0.1s both;
-        }
-
-        .hero h1 .gradient-text {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero-cta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            animation: fadeInUp 0.8s ease 0.3s both;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero Visual */
-        .hero-visual {
-            margin-top: 4rem;
-            width: 100%;
-            max-width: 900px;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .browser-window {
-            border-radius: 16px;
-            border: 1px solid var(--border-subtle);
-            background: var(--bg-secondary);
-            overflow: hidden;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.4),
-                0 0 100px var(--glow-purple);
-        }
-
-        .browser-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .browser-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .browser-dot:nth-child(1) { background: #ff5f56; }
-        .browser-dot:nth-child(2) { background: #ffbd2e; }
-        .browser-dot:nth-child(3) { background: #27c93f; }
-
-        .browser-body {
-            padding: 2rem;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .demo-upload {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2.5rem;
-            border: 2px dashed rgba(108, 92, 231, 0.3);
-            border-radius: 12px;
-            background: rgba(108, 92, 231, 0.03);
-            transition: all 0.3s ease;
-        }
-
-        .demo-upload:hover {
-            border-color: rgba(108, 92, 231, 0.5);
-            background: rgba(108, 92, 231, 0.06);
-        }
-
-        .upload-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .upload-text {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .upload-text strong {
-            color: var(--accent-2);
-        }
-
-        .demo-results {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-
-        .demo-card {
-            padding: 1.25rem;
-            border-radius: 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-        }
-
-        .demo-card-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-        }
-
-        .demo-card-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .demo-card:nth-child(1) .demo-card-value { color: var(--accent-2); }
-        .demo-card:nth-child(2) .demo-card-value { color: var(--accent-3); }
-        .demo-card:nth-child(3) .demo-card-value { color: #fd79a8; }
-
-        /* ====== SECTIONS ====== */
-        section {
-            position: relative;
-            z-index: 1;
-            padding: 6rem 2rem;
-        }
-
-        .section-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent-2);
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 4rem;
-        }
-
-        /* ====== FEATURES ====== */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            padding: 2rem;
-            border-radius: 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--accent-gradient);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .feature-card:hover {
-            border-color: rgba(108, 92, 231, 0.2);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .feature-card:nth-child(1) .feature-icon { background: rgba(108, 92, 231, 0.15); }
-        .feature-card:nth-child(2) .feature-icon { background: rgba(0, 206, 201, 0.15); }
-        .feature-card:nth-child(3) .feature-icon { background: rgba(253, 121, 168, 0.15); }
-        .feature-card:nth-child(4) .feature-icon { background: rgba(255, 189, 46, 0.15); }
-        .feature-card:nth-child(5) .feature-icon { background: rgba(85, 230, 193, 0.15); }
-        .feature-card:nth-child(6) .feature-icon { background: rgba(162, 155, 254, 0.15); }
-
-        .feature-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* ====== HOW IT WORKS ====== */
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            position: relative;
-        }
-
-        .steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 15%;
-            right: 15%;
-            height: 2px;
-            background: var(--border-subtle);
-        }
-
-        .step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 0 auto 1.5rem;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .step:hover .step-number {
-            border-color: var(--accent-1);
-            box-shadow: 0 0 30px var(--glow-purple);
-            background: var(--accent-gradient);
-            color: white;
-        }
-
-        .step h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .step p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* ====== STATS ====== */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            padding: 3rem 0;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
-
-        /* ====== CTA ====== */
-        .cta-section {
-            text-align: center;
-        }
-
-        .cta-box {
-            padding: 4rem;
-            border-radius: 24px;
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1) 0%, rgba(0, 206, 201, 0.1) 100%);
-            border: 1px solid rgba(108, 92, 231, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at center, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .cta-box h2 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .cta-box p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .cta-box .btn {
-            position: relative;
-        }
-
-        /* ====== FOOTER ====== */
-        footer {
-            position: relative;
-            z-index: 1;
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-secondary);
-        }
-
-        /* ====== RESPONSIVE ====== */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .demo-results { grid-template-columns: 1fr; }
-            .steps { grid-template-columns: 1fr; }
-            .steps::before { display: none; }
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .hero-cta { flex-direction: column; }
-            .footer-inner { flex-direction: column; gap: 1rem; }
-            .cta-box { padding: 2.5rem 1.5rem; }
-        }
-
-        /* ====== SCROLL REVEAL ====== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/landing.css">
 </head>
 <body>
     <!-- Background Effects -->
@@ -668,7 +16,7 @@
     <div class="bg-glow bg-glow-2"></div>
 
     <!-- Navbar -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar">
         <div class="navbar-inner">
             <a href="#" class="logo">
                 <div class="logo-icon">⚡</div>
@@ -677,35 +25,35 @@
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="mailto:hello@insightflowai.online">Contact</a></li>
-                <li><a href="#cta" class="btn btn-primary">Get Early Access</a></li>
+                <li><a href="app/" class="active">App</a></li>
+                <li><a href="https://github.com/jagadeshlav/InsightFlow-AI-" target="_blank">GitHub</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="hero" id="hero">
+    <section class="hero">
         <div class="hero-badge">
             <div class="hero-badge-dot"></div>
-            Now in Private Beta — Launching Soon
+            Live — Try It Free
         </div>
         <h1>
-            Turn Raw Data Into<br>
-            <span class="gradient-text">Instant AI Insights</span>
+            Turn Documents Into<br>
+            <span class="gradient-text">Instant AI Answers</span>
         </h1>
         <p>
-            Upload any CSV or Excel file and get automated analysis, smart visualizations, and plain-English summaries — no coding required.
+            Upload any PDF, TXT, or DOCX file and ask questions. Get accurate, source-cited answers powered by RAG and multi-provider AI models.
         </p>
         <div class="hero-cta">
-            <a href="#cta" class="btn btn-primary" id="hero-cta-btn">
-                <span>🚀</span> Request Early Access
+            <a href="app/" class="btn btn-primary">
+                <span>🚀</span> Try Now — Free
             </a>
             <a href="#how-it-works" class="btn btn-secondary">
                 <span>▶</span> See How It Works
             </a>
         </div>
 
-        <!-- Hero Visual -->
+        <!-- Hero Visual: Chat Preview -->
         <div class="hero-visual">
             <div class="browser-window">
                 <div class="browser-header">
@@ -714,25 +62,23 @@
                     <div class="browser-dot"></div>
                 </div>
                 <div class="browser-body">
-                    <div class="demo-upload">
-                        <div class="upload-icon">📊</div>
-                        <div class="upload-text">
-                            <strong>Drop your file here</strong> or click to browse<br>
-                            <small style="color: var(--text-muted)">Supports CSV, XLSX, JSON — up to 100MB</small>
+                    <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.5rem;">📎 annual_report.pdf (142 chunks indexed) • 🤖 qwen/qwen3.8-max-free</div>
+                    <div class="demo-chat-preview">
+                        <div class="demo-msg user">
+                            <div class="label">You</div>
+                            What was the total revenue in Q3?
                         </div>
-                    </div>
-                    <div class="demo-results">
-                        <div class="demo-card">
-                            <div class="demo-card-label">Rows Analyzed</div>
-                            <div class="demo-card-value">24,831</div>
+                        <div class="demo-msg ai">
+                            <div class="label">AI (with sources)</div>
+                            Q3 total revenue was $4.2 million, representing a 23% increase from Q2. Engineering services contributed 62% of this figure.
                         </div>
-                        <div class="demo-card">
-                            <div class="demo-card-label">Insights Found</div>
-                            <div class="demo-card-value">18</div>
+                        <div class="demo-msg user">
+                            <div class="label">You</div>
+                            Which department had the highest growth?
                         </div>
-                        <div class="demo-card">
-                            <div class="demo-card-label">Analysis Time</div>
-                            <div class="demo-card-value">2.4s</div>
+                        <div class="demo-msg ai">
+                            <div class="label">AI (with sources)</div>
+                            The Cloud Infrastructure department had the highest growth at 41% QoQ, driven by new enterprise contracts.
                         </div>
                     </div>
                 </div>
@@ -745,41 +91,39 @@
         <div class="section-inner">
             <div class="reveal">
                 <div class="section-label">⚡ Features</div>
-                <h2 class="section-title">Everything You Need to<br>Understand Your Data</h2>
-                <p class="section-subtitle">
-                    Powerful AI-driven analysis tools that transform complex datasets into actionable intelligence.
-                </p>
+                <h2 class="section-title">Everything You Need to<br>Chat With Your Documents</h2>
+                <p class="section-subtitle">Upload, ask, and get accurate AI answers grounded in your document's content.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card reveal">
                     <div class="feature-icon">🤖</div>
-                    <h3>AI-Powered Analysis</h3>
-                    <p>Advanced LLM models automatically detect patterns, anomalies, and correlations hidden in your data.</p>
+                    <h3>Multi-LLM Support</h3>
+                    <p>Choose from Claude, Gemini, Qwen, and more. Use the free default or bring your own API key.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon">📈</div>
-                    <h3>Smart Visualizations</h3>
-                    <p>Auto-generated charts and graphs tailored to your data type — histograms, scatter plots, heatmaps, and more.</p>
+                    <div class="feature-icon">📄</div>
+                    <h3>Document Q&A</h3>
+                    <p>Upload PDF, TXT, or DOCX files. AI answers are grounded exclusively in your document's content.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon">💬</div>
-                    <h3>Natural Language Summaries</h3>
-                    <p>Get plain-English explanations of your data's story. No statistics degree required.</p>
+                    <div class="feature-icon">📌</div>
+                    <h3>Source Citations</h3>
+                    <p>Every answer shows which document chunks were used. Verify and explore the original context.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">🔒</div>
-                    <h3>Enterprise Security</h3>
-                    <p>Your data never leaves your environment. End-to-end encryption with SOC 2 compliance.</p>
+                    <h3>Privacy-First</h3>
+                    <p>API keys are used per-request only, never stored or logged. Sessions are ephemeral and auto-expire.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">⚡</div>
-                    <h3>Blazing Fast</h3>
-                    <p>Analyze millions of rows in seconds. Optimized pipelines built on cutting-edge infrastructure.</p>
+                    <h3>Instant Samples</h3>
+                    <p>Try pre-indexed demo documents instantly. No upload needed — start chatting in seconds.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon">🔌</div>
-                    <h3>API & Integrations</h3>
-                    <p>Connect to databases, cloud storage, or embed insights directly into your existing workflows via REST API.</p>
+                    <div class="feature-icon">🆓</div>
+                    <h3>Free to Try</h3>
+                    <p>No signup, no credit card. The default model works completely free using TokenRouter.</p>
                 </div>
             </div>
         </div>
@@ -790,59 +134,39 @@
         <div class="section-inner">
             <div class="reveal" style="text-align: center;">
                 <div class="section-label">🔄 How It Works</div>
-                <h2 class="section-title">Three Steps to Intelligence</h2>
+                <h2 class="section-title">Three Steps to Answers</h2>
                 <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
-                    From raw data to actionable insights in under 30 seconds.
+                    From document upload to AI-powered answers in seconds.
                 </p>
             </div>
             <div class="steps reveal">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Upload Your Data</h3>
-                    <p>Drag and drop any CSV, Excel, or JSON file. Or connect directly to your database.</p>
+                    <h3>Upload Document</h3>
+                    <p>Drag and drop any PDF, TXT, or DOCX file (up to 10MB). Or pick a pre-indexed sample.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>AI Analyzes</h3>
-                    <p>Our AI engine processes your data, detecting patterns, outliers, and key metrics automatically.</p>
+                    <h3>AI Indexes It</h3>
+                    <p>Your document is split into chunks and embedded using Google Gemini for semantic search.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Get Insights</h3>
-                    <p>Receive interactive dashboards, visual charts, and plain-English summaries instantly.</p>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats reveal">
-                <div class="stat">
-                    <div class="stat-value">50K+</div>
-                    <div class="stat-label">Files Analyzed</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">2.1s</div>
-                    <div class="stat-label">Avg Analysis Time</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">99.2%</div>
-                    <div class="stat-label">Accuracy Rate</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">500+</div>
-                    <div class="stat-label">Beta Users</div>
+                    <h3>Ask Questions</h3>
+                    <p>Ask anything. AI retrieves relevant chunks and generates accurate, cited answers.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA -->
-    <section class="cta-section" id="cta">
+    <section class="cta-section">
         <div class="section-inner">
             <div class="cta-box reveal">
-                <h2>Ready to Unlock Your Data's Potential?</h2>
-                <p>Join the private beta and be among the first to experience AI-powered data analysis.</p>
-                <a href="mailto:hello@insightflowai.online" class="btn btn-primary" id="final-cta-btn">
-                    <span>🚀</span> Request Early Access
+                <h2>Ready to Chat With Your Documents?</h2>
+                <p>No signup needed. Upload a document or try a sample — it's free.</p>
+                <a href="app/" class="btn btn-primary">
+                    <span>🚀</span> Try Now — Free
                 </a>
             </div>
         </div>
@@ -851,47 +175,30 @@
     <!-- Footer -->
     <footer>
         <div class="footer-inner">
-            <div class="footer-text">© 2026 InsightFlow AI. All rights reserved.</div>
+            <div class="footer-text">2026 InsightFlow AI. Built by Jagadesh.</div>
             <ul class="footer-links">
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="privacy.html">Privacy</a></li>
+                <li><a href="terms.html">Terms</a></li>
                 <li><a href="mailto:hello@insightflowai.online">Contact</a></li>
             </ul>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scroll Reveal Script -->
     <script>
-        // Scroll reveal
         const revealElements = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
         revealElements.forEach(el => observer.observe(el));
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.style.padding = '0.6rem 2rem';
-            } else {
-                navbar.style.padding = '1rem 2rem';
-            }
+            const navbar = document.querySelector('.navbar');
+            navbar.style.padding = window.scrollY > 50 ? '0.5rem 2rem' : '0.75rem 2rem';
         });
-
-        // Smooth counter animation for stats
-        const animateCounters = () => {
-            const stats = document.querySelectorAll('.stat-value');
-            stats.forEach(stat => {
-                const text = stat.textContent;
-                // Keep as is — the visual numbers are static for landing page
-            });
-        };
     </script>
 </body>
 </html>

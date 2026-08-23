@@ -4,160 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy — InsightFlow AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="stylesheet" href="assets/css/common.css">
     <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --text-primary: #f0f0f5;
-            --text-secondary: #8a8a9a;
-            --text-muted: #5a5a6a;
-            --accent-1: #6c5ce7;
-            --accent-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #00cec9 100%);
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            padding: 2rem 1rem;
-        }
-
-        .bg-grid {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background-image: 
-                linear-gradient(rgba(108, 92, 231, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(108, 92, 231, 0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 4rem auto;
-            position: relative;
-            z-index: 1;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: var(--accent-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: white;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 2rem 0 1rem;
-            color: var(--text-primary);
-        }
-
-        ul {
-            list-style-position: inside;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            padding-left: 1rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: var(--text-primary);
-        }
+        .content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 6rem 2rem 3rem; }
+        .content h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .content .updated { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; }
+        .content h2 { font-size: 1.2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; color: var(--accent-2); }
+        .content p, .content li { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 0.75rem; }
+        .content ul { padding-left: 1.5rem; }
+        .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent-3); text-decoration: none; font-size: 0.85rem; margin-bottom: 2rem; }
+        .back-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="bg-grid"></div>
-    <div class="container">
-        <a href="index.html" class="back-link">← Back to Home</a>
-        <br>
-        <a href="index.html" class="logo">
-            <div class="logo-icon">⚡</div>
-            InsightFlow AI
-        </a>
-        <h1>Privacy Policy</h1>
-        <p>Last Updated: June 10, 2026</p>
-        <p>At InsightFlow AI, we prioritize the privacy and security of our users' data. This Privacy Policy explains how we collect, use, process, and safeguard information when you use our automated data analytics platform.</p>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
 
-        <h2>1. Information We Collect</h2>
-        <p>We only collect information necessary to provide and improve our services, including:</p>
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="logo"><div class="logo-icon">⚡</div> InsightFlow AI</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="app/">App</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <h1>Privacy Policy</h1>
+        <p class="updated">Last updated: August 2026</p>
+
+        <h2>What We Collect</h2>
+        <p>InsightFlow AI is designed with minimal data collection:</p>
         <ul>
-            <li><strong>Account Details:</strong> Basic contact info (name, email, organization details) when you register for early access or set up an account.</li>
-            <li><strong>Dataset Metadata:</strong> Information about file structures, columns, and types to optimize AI execution (your raw file data is processed securely and is never stored permanently).</li>
-            <li><strong>Usage Log Data:</strong> Standard access metrics, performance indicators, and execution timings.</li>
+            <li><strong>Uploaded Documents:</strong> Processed in server memory only. Not stored permanently. Deleted when your session expires (30 minutes of inactivity) or when the server restarts.</li>
+            <li><strong>API Keys:</strong> Used per-request only to call your selected LLM provider. Never stored, logged, or persisted in any database or file system.</li>
+            <li><strong>Questions & Answers:</strong> Exist only in server memory during your active session. Not logged or stored.</li>
         </ul>
 
-        <h2>2. Data Processing & Security</h2>
-        <p>Your uploaded files (CSV, Excel, JSON) are processed locally or via secure cloud APIs. We do not sell or share your data. All datasets are fully encrypted in transit and at rest. If using Vertex AI or Gemini APIs, your data is processed according to enterprise security standards and is not used for model training purposes.</p>
+        <h2>How Your Data Is Processed</h2>
+        <p>When you upload a document and ask questions, the following happens:</p>
+        <ul>
+            <li><strong>Embedding:</strong> Document chunks are sent to Google's Gemini Embedding API to create vector representations. Google's API terms apply to this data transmission.</li>
+            <li><strong>LLM Queries:</strong> Your question and relevant document chunks are sent to your selected LLM provider (TokenRouter, Anthropic, Google, or OpenRouter). Each provider's own privacy policy applies.</li>
+            <li><strong>Ephemeral Storage:</strong> Embedded vectors are stored in server memory (ChromaDB in-memory mode) and are lost on server restart or session expiry.</li>
+        </ul>
 
-        <h2>3. Third-Party Services</h2>
-        <p>We leverage secure cloud infrastructure including Google Cloud Platform (Vertex AI, BigQuery) and AWS to ensure reliable platform performance and secure analytical computation.</p>
+        <h2>What We Do NOT Do</h2>
+        <ul>
+            <li>We do not create user accounts or require login</li>
+            <li>We do not store documents on disk or in databases</li>
+            <li>We do not log API keys or chat content</li>
+            <li>We do not use your documents to train AI models</li>
+            <li>We do not share your data with third parties beyond the selected LLM provider</li>
+            <li>We do not use cookies or tracking analytics</li>
+        </ul>
 
-        <h2>4. Contact Us</h2>
-        <p>If you have any questions regarding this privacy policy or our data security protocols, please reach out to us at <a href="mailto:hello@insightflowai.online" style="color: var(--accent-1); text-decoration: none;">hello@insightflowai.online</a>.</p>
+        <h2>Third-Party Services</h2>
+        <p>InsightFlow AI relies on the following external services for functionality:</p>
+        <ul>
+            <li><strong>Google Gemini API:</strong> For document embeddings (vector generation). Subject to <a href="https://policies.google.com/privacy" style="color: var(--accent-3);">Google's Privacy Policy</a>.</li>
+            <li><strong>TokenRouter / OpenRouter / Anthropic:</strong> For AI answer generation. Subject to each provider's respective privacy policies.</li>
+            <li><strong>Render:</strong> For backend hosting. Subject to <a href="https://render.com/privacy" style="color: var(--accent-3);">Render's Privacy Policy</a>.</li>
+            <li><strong>GitHub Pages:</strong> For frontend hosting. Subject to <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" style="color: var(--accent-3);">GitHub's Privacy Statement</a>.</li>
+        </ul>
+
+        <h2>Server Restarts & Data Loss</h2>
+        <p>The backend runs on Render's free tier, which may restart at any time. When this happens:</p>
+        <ul>
+            <li>All active sessions are cleared</li>
+            <li>All uploaded documents and embeddings are lost</li>
+            <li>Pre-indexed sample documents are re-loaded from source files</li>
+            <li>You will need to re-upload your document to continue chatting</li>
+        </ul>
+
+        <h2>Contact</h2>
+        <p>Questions about this policy? Email us at <a href="mailto:hello@insightflowai.online" style="color: var(--accent-3);">hello@insightflowai.online</a>.</p>
     </div>
 </body>
 </html>

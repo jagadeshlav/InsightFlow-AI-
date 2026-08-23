@@ -1,0 +1,15 @@
+This is a sample text document for testing the InsightFlow AI upload pipeline.
+
+It contains multiple paragraphs to ensure the chunking logic works correctly.
+The document should be parsed by TextLoader and split into chunks by RecursiveCharacterTextSplitter.
+
+Here is some more content to make sure we have enough text to create at least a couple of chunks.
+RAG (Retrieval Augmented Generation) is a technique that combines information retrieval with 
+text generation. It allows AI models to answer questions based on specific documents rather than 
+relying solely on their training data. This makes answers more accurate and grounded in facts.
+
+The process works like this: first, a document is split into smaller chunks. Each chunk is then 
+converted into a numerical representation called an embedding. These embeddings are stored in a 
+vector database. When a user asks a question, the question is also converted to an embedding, 
+and the most similar document chunks are retrieved. Finally, these chunks are passed to an LLM 
+along with the question, and the LLM generates an answer based on the retrieved context.
