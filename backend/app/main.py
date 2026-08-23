@@ -319,7 +319,7 @@ async def chat_with_sample(sample_id: str, request: SampleChatRequest):
                 status_code=500,
                 content=ErrorResponse(
                     error_code="CHAT_ERROR",
-                    message="Failed to generate an answer. Please try again.",
+                    message=f"Failed to generate answer: {type(e).__name__}: {str(e)[:200]}",
                 ).model_dump(),
             )
 
