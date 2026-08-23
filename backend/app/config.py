@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     # Upload Settings
     max_file_size_mb: int = 10
     max_chunk_count: int = 500
+    max_document_chars: int = 20000  # ~5K tokens limit for demo (protects embedding quota)
 
     # RAG Settings
     chunk_size: int = 500

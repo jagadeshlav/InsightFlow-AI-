@@ -96,6 +96,15 @@ def parse_document(file_bytes: bytes, filename: str) -> list:
                 "EMPTY_CONTENT",
             )
 
+        # Demo limit: protect embedding quota
+        if total_content > settings.max_document_chars:
+            raise FileValidationError(
+                f"Document too large for demo ({total_content:,} chars). "
+                f"Max allowed: {settings.max_document_chars:,} chars (~5K tokens). "
+                f"Please upload a smaller document or try the pre-indexed sample.",
+                "DOCUMENT_TOO_LARGE",
+            )
+
         for doc in documents:
             doc.metadata["source_filename"] = filename
 
