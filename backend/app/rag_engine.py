@@ -180,7 +180,7 @@ def create_vector_store(session_id: str, chunks: list):
         check_embedding_ctx_length=False,
     )
 
-    chroma_client = chromadb.Client()
+    chroma_client = chromadb.EphemeralClient()
     collection_name = f"session_{session_id.replace('-', '_')[:32]}"
 
     BATCH_SIZE = 90

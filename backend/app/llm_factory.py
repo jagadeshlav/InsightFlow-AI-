@@ -1,5 +1,5 @@
-"""
-InsightFlow AI — LLM Factory
+﻿"""
+InsightFlow AI â€” LLM Factory
 Multi-provider LLM builder with allowlist-based model selection.
 """
 
@@ -11,11 +11,11 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 
-# ─── Provider & Model Configuration ──────────────────────────────────────────
+# â”€â”€â”€ Provider & Model Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 PROVIDER_MODELS = {
     "direct": {
-        "models": ["claude-haiku-4-5-20251001", "gemini-2.0-flash"],
+        "models": ["gemini-3.6-flash", "claude-haiku-4-5-20251001"],
         "allows_custom": False,
     },
     "tokenrouter": {
@@ -31,11 +31,11 @@ PROVIDER_MODELS = {
 }
 
 # Default fallback (no key needed)
-DEFAULT_PROVIDER = "tokenrouter"
-DEFAULT_MODEL = "qwen/qwen3.8-max-free"
+DEFAULT_PROVIDER = "direct"
+DEFAULT_MODEL = "gemini-3.6-flash"
 
 
-# ─── Validation ───────────────────────────────────────────────────────────────
+# â”€â”€â”€ Validation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class LLMError(Exception):
     """Raised when LLM creation or invocation fails."""
@@ -96,7 +96,7 @@ def validate_provider_model(provider: Optional[str], model: Optional[str]) -> tu
     )
 
 
-# ─── LLM Builder ─────────────────────────────────────────────────────────────
+# â”€â”€â”€ LLM Builder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def get_llm(provider: str, model: str, api_key: Optional[str] = None):
     """
@@ -125,7 +125,9 @@ def get_llm(provider: str, model: str, api_key: Optional[str] = None):
                     max_retries=3,
                 )
             elif "gemini" in model.lower():
-                if not api_key:
+                # Use server key if user didnt provide one
+                resolved_key = api_key or settings.google_api_key
+                if not resolved_key:
                     raise LLMError(
                         "API key required for Gemini models. Please provide your Google API key.",
                         "KEY_REQUIRED",
@@ -134,7 +136,7 @@ def get_llm(provider: str, model: str, api_key: Optional[str] = None):
                 return ChatGoogleGenerativeAI(
                     model=model,
                     temperature=0.2,
-                    google_api_key=api_key,
+                    google_api_key=resolved_key,
                 )
             else:
                 raise LLMError(
