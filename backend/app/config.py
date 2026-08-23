@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
 
     # API Keys
-    google_api_key: str = Field(default="", description="Google Gemini API key for embeddings")
+    google_api_key: str = Field(default="", description="Google Gemini API key (legacy, optional)")
+    jina_api_key: str = Field(default="", description="Jina AI API key for embeddings")
     tokenrouter_api_key: str = Field(default="", description="TokenRouter API key for default free model")
 
     # Application Settings

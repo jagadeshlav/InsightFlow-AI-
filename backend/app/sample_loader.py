@@ -64,9 +64,9 @@ class SampleStore:
 
     def load_samples_background(self):
         """Start sample loading in a background thread (non-blocking)."""
-        if not settings.google_api_key:
+        if not settings.jina_api_key:
             logger.warning(
-                "GOOGLE_API_KEY not configured - samples will NOT be pre-indexed."
+                "JINA_API_KEY not configured - samples will NOT be pre-indexed."
             )
             for sample_id in SAMPLE_REGISTRY:
                 self._chunk_counts[sample_id] = 0

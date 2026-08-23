@@ -169,12 +169,15 @@ def create_vector_store(session_id: str, chunks: list):
     Exponential backoff retry on failure.
     """
     import chromadb
-    from langchain_google_genai import GoogleGenerativeAIEmbeddings
+    from langchain_openai import OpenAIEmbeddings
     from langchain_chroma import Chroma
 
-    embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/gemini-embedding-001",
-        google_api_key=settings.google_api_key,
+    # Use Jina AI embeddings (10M free tokens, no daily limit!)
+    embeddings = OpenAIEmbeddings(
+        model="jina-embeddings-v3",
+        openai_api_key=settings.jina_api_key,
+        openai_api_base="https://api.jina.ai/v1",
+        check_embedding_ctx_length=False,
     )
 
     chroma_client = chromadb.Client()
