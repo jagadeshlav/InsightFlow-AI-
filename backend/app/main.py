@@ -1,5 +1,5 @@
-"""
-InsightFlow AI — FastAPI Application
+﻿"""
+InsightFlow AI â€” FastAPI Application
 Main entry point for the backend server.
 """
 
@@ -17,7 +17,7 @@ from app.session_store import session_store
 from app.llm_factory import get_llm, validate_provider_model, LLMError
 from app.sample_loader import sample_store
 
-# ─── Logging Setup ────────────────────────────────────────────────────────────
+# â”€â”€â”€ Logging Setup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 logging.basicConfig(
     level=logging.DEBUG if settings.debug else logging.INFO,
@@ -26,35 +26,35 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# ─── Lifespan ─────────────────────────────────────────────────────────────────
+# â”€â”€â”€ Lifespan â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan — startup and shutdown logic."""
-    logger.info(f"🚀 {settings.app_name} v{settings.app_version} starting...")
+    """Application lifespan â€” startup and shutdown logic."""
+    logger.info(f"ðŸš€ {settings.app_name} v{settings.app_version} starting...")
     logger.info(f"   CORS origins: {settings.cors_origin_list}")
     logger.info(f"   Max sessions: {settings.max_sessions}")
     logger.info(f"   Session TTL: {settings.session_ttl_minutes} min")
 
-    # Load pre-indexed sample documents
-    sample_store.load_samples()
+    # Load pre-indexed sample documents in background (non-blocking for port binding)
+    sample_store.load_samples_background()
 
     yield
-    logger.info(f"👋 {settings.app_name} shutting down...")
+    logger.info(f"ðŸ‘‹ {settings.app_name} shutting down...")
 
 
-# ─── App Factory ──────────────────────────────────────────────────────────────
+# â”€â”€â”€ App Factory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
-    description="Document Q&A RAG API — Upload documents, ask questions, get AI-powered answers.",
+    description="Document Q&A RAG API â€” Upload documents, ask questions, get AI-powered answers.",
     docs_url="/docs",
     redoc_url="/redoc",
     lifespan=lifespan,
 )
 
-# ─── CORS Middleware ──────────────────────────────────────────────────────────
+# â”€â”€â”€ CORS Middleware â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 app.add_middleware(
     CORSMiddleware,
@@ -64,11 +64,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ─── Global Exception Handler ─────────────────────────────────────────────────
+# â”€â”€â”€ Global Exception Handler â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    """Catch-all handler — never expose internal details to the client."""
+    """Catch-all handler â€” never expose internal details to the client."""
     logger.error(f"Unhandled exception: {type(exc).__name__}: {exc}", exc_info=True)
     return JSONResponse(
         status_code=500,
@@ -93,7 +93,7 @@ async def not_found_handler(request: Request, exc):
 
 @app.exception_handler(422)
 async def validation_error_handler(request: Request, exc):
-    """Custom validation error handler — don't expose raw Pydantic errors."""
+    """Custom validation error handler â€” don't expose raw Pydantic errors."""
     return JSONResponse(
         status_code=422,
         content=ErrorResponse(
@@ -103,11 +103,11 @@ async def validation_error_handler(request: Request, exc):
     )
 
 
-# ─── Health Endpoint ──────────────────────────────────────────────────────────
+# â”€â”€â”€ Health Endpoint â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.get("/api/health", response_model=HealthResponse, tags=["System"])
 async def health_check():
-    """Health check endpoint — confirms the API is running."""
+    """Health check endpoint â€” confirms the API is running."""
     return HealthResponse(
         status="ok",
         version=settings.app_version,
@@ -115,7 +115,7 @@ async def health_check():
     )
 
 
-# ─── Upload Endpoint ──────────────────────────────────────────────────────────
+# â”€â”€â”€ Upload Endpoint â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.post("/api/upload", response_model=UploadResponse, tags=["Documents"])
 async def upload_document(file: UploadFile = File(...)):
@@ -191,7 +191,7 @@ async def upload_document(file: UploadFile = File(...)):
     )
 
 
-# ─── Session Delete Endpoint ──────────────────────────────────────────────────
+# â”€â”€â”€ Session Delete Endpoint â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.delete("/api/sessions/{session_id}", response_model=SessionDeleteResponse, tags=["Sessions"])
 async def delete_session(session_id: str):
@@ -211,7 +211,7 @@ async def delete_session(session_id: str):
     )
 
 
-# ─── Sample Endpoints ─────────────────────────────────────────────────────────
+# â”€â”€â”€ Sample Endpoints â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.get("/api/samples", response_model=SampleListResponse, tags=["Samples"])
 async def list_samples():
@@ -233,7 +233,7 @@ async def list_samples():
 async def chat_with_sample(sample_id: str, request: SampleChatRequest):
     """
     Chat with a pre-indexed sample document.
-    No upload needed — instant Q&A!
+    No upload needed â€” instant Q&A!
     """
     # Validate sample exists
     sample_info = sample_store.get_sample_info(sample_id)
@@ -337,7 +337,7 @@ async def chat_with_sample(sample_id: str, request: SampleChatRequest):
     )
 
 
-# ─── Chat Endpoint ────────────────────────────────────────────────────────────
+# â”€â”€â”€ Chat Endpoint â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.post("/api/chat", response_model=ChatResponse, tags=["Chat"])
 async def chat_with_document(request: ChatRequest):
@@ -446,7 +446,7 @@ async def chat_with_document(request: ChatRequest):
     )
 
 
-# ─── Run with Uvicorn (local dev) ────────────────────────────────────────────
+# â”€â”€â”€ Run with Uvicorn (local dev) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 if __name__ == "__main__":
     import uvicorn

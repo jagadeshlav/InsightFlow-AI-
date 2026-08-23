@@ -1,5 +1,5 @@
-"""
-Tests for InsightFlow AI — Health endpoint, CORS, and error handling.
+﻿"""
+Tests for InsightFlow AI â€” Health endpoint, CORS, and error handling.
 """
 
 from fastapi.testclient import TestClient
@@ -55,17 +55,17 @@ class TestCORS:
         )
         assert response.headers.get("access-control-allow-origin") == "http://localhost:5500"
 
-    def test_cors_blocks_unknown_origin(self):
+    def test_cors_allows_any_origin(self):
+        """With CORS set to *, any origin should be allowed."""
         response = client.options(
             "/api/health",
             headers={
-                "Origin": "https://evil-site.com",
+                "Origin": "https://any-site.com",
                 "Access-Control-Request-Method": "GET",
             },
         )
-        # Should NOT include the evil origin
         allow_origin = response.headers.get("access-control-allow-origin")
-        assert allow_origin != "https://evil-site.com"
+        assert allow_origin == "https://any-site.com"
 
 
 class TestErrorHandling:
